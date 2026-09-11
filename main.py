@@ -1,30 +1,37 @@
+from src.cost_calculator import calculate_cost
+
+
 print("========================================")
 print("      CLOUD COST ANALYZER")
 print("========================================")
 
-print()
-print("1. Enter Cloud Usage")
-print("2. Calculate Cost")
-print("3. Predict Future Cost")
-print("4. Optimization Recommendations")
-print("5. Exit")
+print("\nEnter Cloud Usage Details")
 
-choice = input("\nEnter your choice: ")
+ec2_hours = float(input("EC2 usage hours: "))
+s3_storage = float(input("S3 storage in GB: "))
+ebs_storage = float(input("EBS storage in GB: "))
+data_transfer = float(input("Data transfer in GB: "))
+ec2_instances = int(input("Number of EC2 instances: "))
 
-if choice == "1":
-    print("Cloud Usage selected")
+cost = calculate_cost(
+    ec2_hours,
+    s3_storage,
+    ebs_storage,
+    data_transfer,
+    ec2_instances
+)
 
-elif choice == "2":
-    print("Cost Calculation selected")
+print("\n========================================")
+print("             COST SUMMARY")
+print("========================================")
 
-elif choice == "3":
-    print("Cost Prediction selected")
+print(f"EC2 Cost          : ₹{cost['ec2']:.2f}")
+print(f"S3 Cost           : ₹{cost['s3']:.2f}")
+print(f"EBS Cost          : ₹{cost['ebs']:.2f}")
+print(f"Data Transfer     : ₹{cost['data_transfer']:.2f}")
 
-elif choice == "4":
-    print("Optimization selected")
+print("----------------------------------------")
 
-elif choice == "5":
-    print("Thank you for using Cloud Cost Analyzer!")
+print(f"TOTAL COST        : ₹{cost['total']:.2f}")
 
-else:
-    print("Invalid choice")
+print("========================================")
